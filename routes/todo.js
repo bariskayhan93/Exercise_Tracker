@@ -8,7 +8,7 @@ const User = require('../models/User');
 // Short URL Generator
 router.post('/:_id/exercises', async (req, res) => {
   const taskId = req.body[':_id'];
-  const desc= req.body.description
+  const description= req.body.description
   const duration= req.body.duration
   const date= req.body.date
   console.log(req.body)
@@ -21,7 +21,7 @@ router.post('/:_id/exercises', async (req, res) => {
       if (user) {
         task = new Exercise({
           taskId,
-          desc,
+          description,
           duration,
           date,
           username

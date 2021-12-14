@@ -23,7 +23,7 @@ router.get('/users/:_id/logs', async (req,res)=>{
   let exc = await Exercise.find({ taskId });
   const filteredLogs = []
   const retFil= exc.filter(x=>
-    filteredLogs.push({date:x.date,duration:x.duration,description:x.desc})
+    filteredLogs.push({date:x.date,duration:x.duration,description:x.description})
     )
   console.log(retFil)
   console.log(filteredLogs)

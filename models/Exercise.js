@@ -4,7 +4,7 @@ const ExcsSchema = new mongoose.Schema({
   taskId: {
     type: String
   },
-  desc: {
+  description: {
     type: String,
     require: true,
   },
