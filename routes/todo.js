@@ -4,11 +4,12 @@ const shortid = require('shortid');
 const Exercise = require('../models/Exercise');
 const User = require('../models/User');
 
+
 // Short URL Generator
 router.post('/:_id/exercises', async (req, res) => {
   const taskId = req.body[':_id'];
   const desc= req.body.description
-  const dur= req.body.duration
+  const duration= req.body.duration
   const date= req.body.date
   console.log(req.body)
   if (taskId) {
@@ -21,7 +22,7 @@ router.post('/:_id/exercises', async (req, res) => {
         task = new Exercise({
           taskId,
           desc,
-          dur,
+          duration,
           date,
           username
         });

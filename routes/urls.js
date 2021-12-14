@@ -2,7 +2,7 @@ const Express = require('express');
 const router = Express.Router();
 const shortid = require('shortid');
 const User = require('../models/User');
-
+const Exercise = require('../models/Exercise');
 
 
 router.get('/users', async (req,res)=>{
@@ -12,9 +12,36 @@ router.get('/users', async (req,res)=>{
     users.forEach(function(user){
       userMap[user._id]=user;
     })
-    res.send(Array(userMap))
+    res.send(users)
   })
 })
+
+router.get('/users/:_id/logs', async (req,res)=>{
+  const taskId = req.params._id;
+  console.log(req.params)
+  let user = await User.findOne({ _id:taskId });
+  let exc = await Exercise.find({ taskId });
+  const filteredLogs = []
+  const retFil= exc.filter(x=>
+    filteredLogs.push({date:x.date,duration:x.duration,description:x.desc})
+    )
+  console.log(retFil)
+  console.log(filteredLogs)
+
+
+
+res.send({_id:taskId,username:user.username,count:filteredLogs.length,log:filteredLogs})
+
+ /* Exercise.find({},function(err,excs){
+    var excMap={};
+
+    excs.forEach(function(exc){
+      excMap[user._id]=user;
+    })
+    res.send(Array(excMap))
+  })*/
+})
+
 
 // Short URL Generator
 router.post('/users', async (req, res) => {

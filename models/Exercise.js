@@ -8,7 +8,7 @@ const ExcsSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
-  dur: {
+  duration: {
     type: Number,
     require: true,
     min: 0,
