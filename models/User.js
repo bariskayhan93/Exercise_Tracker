@@ -1,12 +1,23 @@
 const mongoose = require("mongoose");
-var ExcsSchema = require('./Exercise');
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    min: 3,
-    max: 10
-  }
+  },
+  log: [{
+    description: {
+      type: String,
+      required: true
+    },
+    duration: {
+      type: Number,
+      required: true
+    },
+    date: {
+      type: Date,
+      required: true
+    }
+}]
   
 },{ versionKey: false });
 

@@ -1,37 +1,48 @@
 var Express = require("express");
 var router = Express.Router();
-var Exercise = require("../models/Exercise");
 var User = require("../models/User");
 
 // Short URL Generator
-router.post("/:_id/exercises",  (req, res)=> {
-  let taskId = req.params._id;
-  let description = req.body.description;
-  let duration = req.body.duration;
-  let date =
-    req.body.date === "" || req.body.date === undefined
-      ? new Date().toDateString()
-      : new Date(Date.parse(req.body.date)).toDateString();
+router.post('/:_id/exercises', (req, res) => {
+  let id = req.params._id;
+  let duration = parseInt(req.body.duration);
+  let date = req.body.date === '' ? new Date() : new Date(req.body.date);
 
-      User.findById({ _id:taskId}, ( error, user ) => {
-        if ( error ) { return error }
-       let username;
-        let task;
-        let _id = taskId;
-          task = new Exercise({
-            _id: taskId,
-            username:user.username,
-            date:date,
-            duration,
-            description,
-          });
-      
-          task.save();
-          res.json(task);
-      });
+  if (date.toDateString() === 'Invalid Date') {
+    return res.send('Invalid Date');
+  }
 
+  if (req.body.description == '') {
+    return res.send('Invalid description');
+  }
 
- 
+  if (!duration && duration !== 0) {
+    return res.send('Invalid duration');
+  }
+
+  User.findByIdAndUpdate(id, {
+    $push: {
+      log: {
+        description: req.body.description,
+        duration: duration,
+        date: date
+      }
+    }
+  }, {new: true}, (err, user) => {
+    if (err) {
+      console.log(err);
+      return res.send(err.message);
+    }
+    console.log('PUSH: ', user._id);
+    res.json({
+      username: user.username,
+      description: req.body.description,
+      duration: parseInt(req.body.duration),
+      date: date.toDateString(),
+      _id: user._id
+    });
+
+  });
 });
 
 module.exports = router;
