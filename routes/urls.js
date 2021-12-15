@@ -1,8 +1,8 @@
-const Express = require('express');
-const router = Express.Router();
-const shortid = require('shortid');
-const User = require('../models/User');
-const Exercise = require('../models/Exercise');
+var Express = require('express');
+var router = Express.Router();
+var shortid = require('shortid');
+var User = require('../models/User');
+var Exercise = require('../models/Exercise');
 
 
 router.get('/users', async (req,res)=>{
@@ -17,14 +17,14 @@ router.get('/users', async (req,res)=>{
 })
 
 router.get('/users/:_id/logs', async (req,res)=>{
-  const taskId = req.params._id;
+  let taskId = req.params._id;
   console.log(taskId)
   let user = await User.findOne({ _id:taskId });
   let exc = await Exercise.find({ ObjectID:taskId });
   console.log(user)
   console.log(exc)
-  const filteredLogs = []
-  const retFil= exc.filter(x=>
+  let filteredLogs = []
+  let retFil= exc.filter(x=>
     filteredLogs.push({description:x.description,duration:x.duration,date:x.date})
     )
   console.log(retFil)
