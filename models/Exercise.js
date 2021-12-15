@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 
 const ExcsSchema = new mongoose.Schema({
   _id: String,
-  description: {
+  username: {
+    type: String,
+    require: true,
+  },
+  date: {
     type: String,
     require: true,
   },
@@ -12,11 +16,7 @@ const ExcsSchema = new mongoose.Schema({
     min: 0,
     max: 100,
   },
-  date: {
-    type: String,
-    require: true,
-  },
-  username: {
+  description: {
     type: String,
     require: true,
   }

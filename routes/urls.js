@@ -25,7 +25,7 @@ router.get('/users/:_id/logs', async (req,res)=>{
   console.log(exc)
   const filteredLogs = []
   const retFil= exc.filter(x=>
-    filteredLogs.push({date:x.date,duration:x.duration,description:x.description})
+    filteredLogs.push({description:x.description,duration:x.duration,date:x.date})
     )
   console.log(retFil)
   console.log(filteredLogs)

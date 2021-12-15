@@ -1,48 +1,43 @@
-const Express = require('express');
+const Express = require("express");
 const router = Express.Router();
-const shortid = require('shortid');
-const Exercise = require('../models/Exercise');
-const User = require('../models/User');
-
+const shortid = require("shortid");
+const Exercise = require("../models/Exercise");
+const User = require("../models/User");
 
 // Short URL Generator
-router.post('/:_id/exercises', async (req, res) => {
-  const taskId = req.body[':_id'];
-  const description= req.body.description
-  const duration= req.body.duration
-  const date= req.body.date
-  console.log(req.body)
+router.post("/:_id/exercises", async (req, res) => {
+  const taskId = req.body[":_id"];
+  const description = req.body.description;
+  const duration = req.body.duration;
+  const date = req.body.date === '' || req.body.date === undefined ? new Date() : new Date(req.body.date)
+  console.log(date);
   if (taskId) {
     try {
-      let user = await User.findOne({ _id:taskId });
+      let user = await User.findOne({ _id: taskId });
       let task;
-      console.log(user)
-      let username=user.username;
-      let _id=user._id
+      let username = user.username;
+      let _id = user._id;
       if (user) {
         task = new Exercise({
           _id,
-          description,
-          duration,
+          username,
           date,
-          username
+          duration,
+          description,
         });
 
         await task.save();
         res.json(task);
       } else {
-        res.json(
-          "not found"
-        );
-
+        res.json("not found");
       }
     } catch (err) {
       console.log(err);
-      res.status(500).json('Server Error');
+      res.status(500).json("Server Error");
     }
   } else {
     res.json({
-      "error": "invalid URL"
+      error: "invalid URL",
     });
   }
 });
