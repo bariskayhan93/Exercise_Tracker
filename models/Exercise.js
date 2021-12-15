@@ -7,18 +7,15 @@ const ExcsSchema = new mongoose.Schema({
     require: true,
   },
   date: {
-    type: String,
-    require: true,
+    type: String
   },
   duration: {
-    type: Number,
-    require: true,
-    min: 0,
-    max: 100,
+    type: String,
+    require: true
   },
   description: {
     type: String,
-    require: true,
+    require: true
   }
 },{ versionKey: false }
 );
