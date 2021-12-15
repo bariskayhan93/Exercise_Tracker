@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
 
 const ExcsSchema = new mongoose.Schema({
-  taskId: {
-    type: String
-  },
+  _id: String,
   description: {
     type: String,
     require: true,

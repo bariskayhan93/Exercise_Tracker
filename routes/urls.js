@@ -18,9 +18,11 @@ router.get('/users', async (req,res)=>{
 
 router.get('/users/:_id/logs', async (req,res)=>{
   const taskId = req.params._id;
-  console.log(req.params)
+  console.log(taskId)
   let user = await User.findOne({ _id:taskId });
   let exc = await Exercise.find({ taskId });
+  console.log(user)
+  console.log(exc)
   const filteredLogs = []
   const retFil= exc.filter(x=>
     filteredLogs.push({date:x.date,duration:x.duration,description:x.description})

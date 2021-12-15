@@ -18,9 +18,10 @@ router.post('/:_id/exercises', async (req, res) => {
       let task;
       console.log(user)
       let username=user.username;
+      let _id=user._id
       if (user) {
         task = new Exercise({
-          taskId,
+          _id,
           description,
           duration,
           date,
