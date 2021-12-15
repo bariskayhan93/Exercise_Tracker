@@ -6,7 +6,10 @@ var User = require("../models/User");
 router.post('/:_id/exercises', (req, res) => {
   let id = req.params._id;
   let duration = parseInt(req.body.duration);
-  let date = req.body.date === '' ? new Date() : new Date(req.body.date);
+  let date = =
+    req.body.date === "" || req.body.date === undefined
+      ? new Date().toDateString()
+      : new Date(Date.parse(req.body.date)).toDateString();
 
   if (date.toDateString() === 'Invalid Date') {
     return res.send('Invalid Date');
