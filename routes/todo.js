@@ -6,40 +6,28 @@ const User = require("../models/User");
 
 // Short URL Generator
 router.post("/:_id/exercises", async (req, res) => {
-  const taskId = req.body[":_id"];
-  const description = req.body.description;
-  const duration =req.body.duration;
-  const date = String(req.body.date === '' || req.body.date === undefined ? new Date() : new Date(req.body.date))
-  console.log(date);
-  if (taskId) {
-    try {
-      let user = await User.findOne({ _id: taskId });
-      let task;
-      let username = user.username;
-      let _id = user._id;
-      if (user) {
-        task = new Exercise({
-          _id,
-          username,
-          date,
-          duration,
-          description,
-        });
-
-        await task.save();
-        res.json(task);
-      } else {
-        res.json("not found");
+  let newSession = new Exercise({
+    description: req.body.description,
+    duration: parseInt(req.body.duration),
+    date: req.body.date
+  });
+  User.findByIdAndUpdate(
+    req.params._id,
+    { $push: { log: newSession } },
+    { new: true },
+    (err, update) => {
+      if (!err) {
+        let resObj = {};
+        resObj._id = update.id;
+        resObj.username = update.username;
+        resObj.description = newSession.description;
+        resObj.duration = newSession.duration;
+        resObj.date = new Date(newSession.date).toDateString();
+        res.json(resObj);
       }
-    } catch (err) {
-      console.log(err);
-      res.status(500).json("Server Error");
     }
-  } else {
-    res.json({
-      error: "invalid URL",
-    });
-  }
+  );
+
 });
 
 module.exports = router;

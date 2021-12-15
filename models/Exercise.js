@@ -10,7 +10,7 @@ const ExcsSchema = new mongoose.Schema({
     type: String
   },
   duration: {
-    type: String,
+    type: Number,
     require: true
   },
   description: {
