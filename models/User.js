@@ -5,8 +5,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
     min: 3,
-    max: 10,
-    unique: true,
+    max: 10
   }
   
 },{ versionKey: false });

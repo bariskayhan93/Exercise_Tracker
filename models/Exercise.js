@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const ExcsSchema = new mongoose.Schema({
-  _id: String,
   username: {
     type: String,
     require: true,

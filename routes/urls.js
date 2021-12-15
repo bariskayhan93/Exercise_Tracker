@@ -20,7 +20,7 @@ router.get('/users/:_id/logs', async (req,res)=>{
   const taskId = req.params._id;
   console.log(taskId)
   let user = await User.findOne({ _id:taskId });
-  let exc = await Exercise.find({ taskId });
+  let exc = await Exercise.find({ ObjectID:taskId });
   console.log(user)
   console.log(exc)
   const filteredLogs = []
@@ -33,15 +33,6 @@ router.get('/users/:_id/logs', async (req,res)=>{
 
 
 res.send({_id:taskId,username:user.username,count:filteredLogs.length,log:filteredLogs})
-
- /* Exercise.find({},function(err,excs){
-    var excMap={};
-
-    excs.forEach(function(exc){
-      excMap[user._id]=user;
-    })
-    res.send(Array(excMap))
-  })*/
 })
 
 
