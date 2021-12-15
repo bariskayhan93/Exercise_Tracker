@@ -1,6 +1,5 @@
 var Express = require("express");
 var router = Express.Router();
-var shortid = require("shortid");
 var Exercise = require("../models/Exercise");
 var User = require("../models/User");
 

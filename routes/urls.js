@@ -1,6 +1,5 @@
 var Express = require('express');
 var router = Express.Router();
-var shortid = require('shortid');
 var User = require('../models/User');
 var Exercise = require('../models/Exercise');
 
@@ -38,7 +37,7 @@ res.send({_id:taskId,username:user.username,count:filteredLogs.length,log:filter
 
 // Short URL Generator
 router.post('/users', async (req, res) => {
-  const {username} = req.body;
+  let {username} = req.body;
   console.log(username)
   if (username) {
     try {
