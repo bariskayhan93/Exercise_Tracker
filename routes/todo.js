@@ -9,7 +9,7 @@ router.post("/:_id/exercises", async (req, res) => {
   const taskId = req.body[":_id"];
   const description = req.body.description;
   const duration =req.body.duration;
-  const date = String(req.body.date === '' || req.body.date === undefined ? new Date() : new Date(req.body.date))
+  const date = String(req.body.date === '' || req.body.date === undefined ? new Date() : new Date(Date.parse(req.body.date)).toDateString())
   console.log(taskId);
   if (taskId) {
     try {
