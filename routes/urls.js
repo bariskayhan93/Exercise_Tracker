@@ -26,10 +26,6 @@ router.get('/users/:_id/logs', async (req,res)=>{
   let retFil= exc.filter(x=>
     filteredLogs.push({description:x.description,duration:x.duration,date:x.date})
     )
-  console.log(retFil)
-  console.log(filteredLogs)
-
-
 
 res.send({_id:taskId,username:user.username,count:filteredLogs.length,log:filteredLogs})
 })

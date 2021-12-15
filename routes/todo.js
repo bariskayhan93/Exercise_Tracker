@@ -19,9 +19,9 @@ router.post("/:_id/exercises",  (req, res)=> {
         let task;
         let _id = taskId;
           task = new Exercise({
-            task_id: _id,
+            _id: taskId,
             username:user.username,
-            date,
+            date:date,
             duration,
             description,
           });
