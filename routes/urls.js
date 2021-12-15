@@ -3,7 +3,7 @@ var router = Express.Router();
 var User = require('../models/User');
 
 
-router.get('/api/users', (req, res) => {
+router.get('/users', (req, res) => {
   User.find({})
     .select(({
       _id: 1,
@@ -18,7 +18,7 @@ router.get('/api/users', (req, res) => {
       res.json(users);
     });
 });
-router.get('/api/users/:_id/logs', (req, res) => {
+router.get('/users/:_id/logs', (req, res) => {
   let id = req.params._id;
   let _from = req.query.from;
   let to = req.query.to;
@@ -103,50 +103,25 @@ router.get('/api/users/:_id/logs', (req, res) => {
     });
 });
 
-/*
-router.get('/users/:_id/logs', async (req,res)=>{
-  let taskId = req.params._id;
-  console.log(taskId)
-  let user = await User.findOne({ _id:taskId });
-  let exc = await Exercise.find({ ObjectID:taskId });
-  console.log(user)
-  console.log(exc)
-  let filteredLogs = []
-  let retFil= exc.filter(x=>
-    filteredLogs.push({description:x.description,duration:x.duration,date:x.date})
-    )
-
-res.send({_id:taskId,username:user.username,count:filteredLogs.length,log:filteredLogs})
-})*/
-
-
 // Short URL Generator
-router.post('/users', async (req, res) => {
-  let {username} = req.body;
-  console.log(username)
-  if (username) {
-    try {
-      let user = await User.findOne({ username });
-      if (user) {
-        res.json(user);
-      }else {
+router.post('/users', (req, res) => {
+  let username = req.body.username;
+  let user = new User({
+    username: username
+  });
 
-        user = new User({
-          username
-        });
-
-        await user.save();
-        res.json(user);
-      }
-    } catch (err) {
+  user.save((err) => {
+    if (err) {
       console.log(err);
-      res.status(500).json('Server Error');
+      return res.send('Error: Could not save to the database');
     }
-  } else {
+
     res.json({
-      "error": "invalid URL"
+      username: user.username,
+      _id: user._id
     });
-  }
+  });
+
 });
 
 module.exports = router;
